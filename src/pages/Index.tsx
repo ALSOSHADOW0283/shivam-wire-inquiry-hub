@@ -1,14 +1,29 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import LoginPage from '@/components/LoginPage';
+import Dashboard from '@/components/Dashboard';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = (email: string, password: string) => {
+    // Simple authentication logic - in real app, this would validate against backend
+    if (email && password) {
+      setIsAuthenticated(true);
+      console.log(`Login successful for: ${email}`);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    console.log('User logged out');
+  };
+
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
+  return <Dashboard onLogout={handleLogout} />;
 };
 
 export default Index;
